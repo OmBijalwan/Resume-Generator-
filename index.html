@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Resume Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container" id="resume-form">
+        <h1 class="text-center my-2">Resume Generator</h1>
+
+
+        <div class="row my-5">
+            <div class="col-md-6">
+                <h2>Personal Information</h2>
+                <div class="form-group mt-2">
+
+                    <label for="name-Field">Name </label>
+                    <input type="text" 
+                    name="Name" 
+                    placeholder="Enter..." 
+                    id="name-Field" 
+                    class="form-control">
+                </div>
+
+                <div class="form-group mt-2">
+
+                    <label for="contact-Number-Field">Contact Number </label>
+                    <input type="text" 
+                    name="Contact" 
+                    placeholder="Enter..." 
+                    id="contact-Number-Field" 
+                    class="form-control">
+                </div>
+
+                <div class="form-group mt-2">
+
+                    <label for="email-Field">Email </label>
+                    <input type="Email" 
+                    name="Email" 
+                    placeholder="Enter..." 
+                    id="email-Field" 
+                    class="form-control">
+                </div>
+
+                <div class="form-group mt-2">
+
+                    <label for="address-Field">Address </label>
+                    <textarea 
+                    name="Address" 
+                    placeholder="Enter..." 
+                    id="address-Field" 
+                    class="form-control" 
+                    rows="4">
+                </textarea>
+                </div>
+
+
+                <div class="form-group mt-3">
+                    <label for="image_Field">Select Your Photo</label>
+                    <input type="file" id="image-Field" class="form-control">
+                </div>
+
+
+
+                <p class="text-secondary my-3">Important Links</p>
+
+                <!-- <div class="form-group mt-2">
+
+                    <label for="wb-Field">Website</label>
+                    <input type="text" 
+                    name="Website" 
+                    placeholder="Enter..." 
+                    id="wb-Field" 
+                    class="form-control">
+                </div> -->
+
+                <div class="form-group mt-2">
+
+                    <label for="linkedIn-Field">LinkedIn </label>
+                    <input type="text" 
+                    name="LinkedIn" 
+                    placeholder="Enter..." 
+                    id="linkedIn-Field" 
+                    class="form-control">
+                </div>
+
+                <div class="form-group mt-2">
+
+                    <label for="gitHub-Field">GitHub </label>
+                    <input type="text" 
+                    name="GitHub" 
+                    placeholder="Enter..." 
+                    id="gitHub-Field" 
+                    class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h2>Professional Information</h2>
+
+                <div class="form-group mt-2">
+
+                    <label for="">Objective </label>
+                    <textarea 
+                    id="objective-Field"
+                    placeholder="Enter..." 
+                    class="form-control" ></textarea>
+                </div>
+
+                <div class="form-group mt-2" id="AQ">
+
+                    <label for="">Academic  Qualification  </label>
+                    <textarea                    
+                    placeholder="Enter..." 
+                    
+                    class="form-control aqField" ></textarea>
+                
+
+                <div class="contianer text-center mt-2" id="aqAddButton">
+                    <button onclick="addNewAQField()" class="btn btn-primary btn-sm">Add</button>
+                </div>
+            </div>
+
+
+                <div class="form-group mt-2"  id="WE">
+
+                    <label for="">Work-Experience</label>
+                    <textarea                    
+                    placeholder="Enter..." 
+                    class="form-control weField" ></textarea>
+                
+
+                <div class="contianer text-center mt-2" id="weAddButton">
+                    <button onclick="addNewWEField()" class="btn btn-primary btn-sm">Add</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="conatiner text-center mt-3 mb-3">
+            <button onclick="generateResume()" class="btn btn-primary btn-lg">
+                Generate Resume
+            </button>
+        </div>
+    </div>
+
+
+
+
+
+    
+    <div class="conatiner" id="resume-template">
+        
+        <div class="row ">
+            <div class="col-md-4  text-center py-5 background">
+
+                <img  id="image-template" src="data:image/jpeg;base64,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" alt="" class="img-fluid myimg">
+
+
+                <div class="conatiner ">
+                    <p id="nameTemplate1">Yash Kapoor</p>
+                    <p id="contactTemplate">+91xxxxxxxxxx , +91xxxxxxxxxx</p>
+                    <p id="emailTemplate">YashKapoor@gmail.com</p>
+                    <p id="addressTemplate">1234/234 Sector 12 Delhi , INDIA</p>
+                    <hr />
+                    <p id="linkedInTemplate"><a href="#1">https://github.com/</a></p>
+                    <p id="githubTemplate"><a href="#1">https://github.com/</a></p>
+              
+                </div>
+            </div>
+            <div class="col-md-8 py-5">
+
+                <h1 id="nameTemplate2" class="text-center" style="font-weight: 800;" >Yash Kapoor</h1>
+
+                <div class="card mt-4">
+                    <div class="card-header background">
+                        <h3>Objective</h3>
+                    </div>
+                    <div class="card-body">
+                        <p id="objectiveTemplate">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                            Recusandae molestiae, dicta maxime animi fugit id enim 
+                            fugiat optio velit veniam ratione sed aliquid quae culpa modi 
+                            aperiam nemo, at autem laborum suscipit omnis! Neque maiore
+                             quisquam voluptatum recusandae sequi suscipit enim,
+                             placeat perspiciatis doloribus soluta quo ducimus, reprehenderit, illum amet!</p>
+                    </div>
+                </div>
+
+
+
+                <div class="card mt-4">
+                    <div class="card-header background">
+                        <h3>Academic Qualification</h3>
+                    </div>
+                    <div class="card-body">
+                      <ul id="aqTemplate">
+                        <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia, voluptatem.</li>
+                      
+                      
+                        <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia, voluptatem.</li>
+                      
+                      
+                        <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia, voluptatem.</li>
+                      </ul>
+                    </div>
+                </div>
+
+
+                <div class="card mt-4">
+                    <div class="card-header background">
+                        <h3>Work Experience</h3>
+                    </div>
+                    <div class="card-body">
+                      <ul id="weTemplate">
+                        <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia, voluptatem.</li>
+                    
+                      
+                        <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia, voluptatem.</li>
+                      
+                      
+                        <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia, voluptatem.</li>
+                      </ul>
+                    </div>
+                </div>
+
+                
+
+
+                <div class="contanier text-center mt-3">
+                    <button onclick="printResume()" class="btn background">Print Resume</button>           
+                 </div>
+            </div>
+
+
+           
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
